@@ -4,6 +4,7 @@
 <meta name="google-site-verification" content="eY1cEoZrEf7RwL-YE8aTl2WxCbC6oDFbQ9OnPB5NeJI" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1B3044">
 <title>KR Creaation — Knitwear Manufacturer, Tirupur</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,12 +24,13 @@
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
-    background:var(--ink); /* Background behind the 3D image */
+    background:var(--ink);
     color:var(--ink);
     font-family:'IBM Plex Sans', sans-serif;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
+  img{max-width:100%;}
   a{color:inherit;}
   .wrap{max-width:1140px; margin:0 auto; padding:0 32px;}
   h1,h2,h3{font-family:'Fraunces', serif; font-weight:700; letter-spacing:-0.01em; color:var(--indigo-2);}
@@ -44,7 +46,8 @@
 
   /* ---------- 3D Intro Splash Image ---------- */
   .intro-scroll-space {
-    height: 100vh; /* Creates the scrollable space for the effect */
+    height: 100vh;
+    height: 100svh;
     position: relative;
     z-index: 1;
   }
@@ -52,8 +55,9 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
+    height: 100svh;
     z-index: 0;
     display: flex;
     flex-direction: column;
@@ -64,7 +68,6 @@
     will-change: transform, opacity;
   }
   #intro-splash::after {
-    /* Dark overlay to make text readable */
     content: ''; position: absolute; inset: 0;
     background: rgba(27, 48, 68, 0.4);
     z-index: 1;
@@ -80,10 +83,11 @@
     z-index: 2;
     text-align: center;
     color: var(--white);
+    padding: 0 20px;
   }
   .intro-content h1 {
     color: var(--white);
-    font-size: clamp(48px, 8vw, 84px);
+    font-size: clamp(40px, 8vw, 84px);
     margin-bottom: 16px;
     text-shadow: 0 10px 30px rgba(0,0,0,0.3);
   }
@@ -103,24 +107,22 @@
     color: var(--white);
     animation: bounce 2s infinite;
   }
-  .scroll-indicator svg {
-    width: 32px; height: 32px;
-  }
+  .scroll-indicator svg {width: 32px; height: 32px;}
   @keyframes bounce {
     0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
     40% { transform: translateY(-20px) translateX(-50%); }
     60% { transform: translateY(-10px) translateX(-50%); }
   }
 
-  /* Wrap main site content so it slides OVER the fixed image */
   .main-site-content {
     background: var(--cotton);
     position: relative;
     z-index: 10;
-    box-shadow: 0 -25px 50px rgba(0,0,0,0.3); /* Drops shadow on the 3D image */
+    box-shadow: 0 -25px 50px rgba(0,0,0,0.3);
+    overflow-x: hidden;
   }
 
-  /* ---------- knit texture (signature motif) ---------- */
+  /* ---------- knit texture ---------- */
   .knit-bg{
     position:absolute; inset:0;
     background-image:
@@ -132,23 +134,19 @@
   }
   .knit-bg.dark{opacity:0.10;}
 
-  /* stitched seam divider */
+  /* stitched seam divider (pure CSS, never overflows) */
   .seam{
-    display:flex; align-items:center; gap:6px;
-    height:14px; margin: 0 auto;
-    width:100%;
+    height:2px; width:100%; margin:6px auto;
+    background:repeating-linear-gradient(90deg, var(--line) 0 9px, transparent 9px 15px);
+    overflow:hidden;
   }
-  .seam span{
-    display:block; width:9px; height:2px; background:var(--line); flex:0 0 auto;
-    transform: skewX(-20deg);
-  }
-  .seam.on-dark span{background:rgba(241,236,222,0.35);}
 
   /* ---------- nav ---------- */
   header{
     position:sticky; top:0; z-index:50;
     background:rgba(241,236,222,0.85);
     backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
     border-bottom:1px solid var(--line);
   }
   nav{
@@ -177,7 +175,7 @@
   }
   .hero .wrap{position:relative; z-index:2;}
   .hero h1{
-    font-size:clamp(42px, 6vw, 68px);
+    font-size:clamp(36px, 6vw, 68px);
     line-height:1.04;
     margin:18px 0 22px;
     max-width:12ch;
@@ -207,14 +205,14 @@
   /* ---------- section shell ---------- */
   section{padding:90px 0; position:relative;}
   .section-head{max-width:62ch; margin-bottom:54px;}
-  .section-head h2{font-size:clamp(30px,3.6vw,42px); margin-top:10px;}
+  .section-head h2{font-size:clamp(26px,3.6vw,42px); margin-top:10px;}
   .section-head p{color:#3c4548; margin-top:14px; font-size:16px; line-height:1.65;}
 
   .band-dark{background:var(--indigo-2); color:var(--cotton);}
   .band-dark h2, .band-dark .eyebrow{color:var(--cotton);}
   .band-dark .section-head p{color:#c9d3da;}
 
-  /* ---------- 3D Scroll Reveal Classes ---------- */
+  /* ---------- 3D Scroll Reveal ---------- */
   .reveal-3d {
     opacity: 0;
     transform: perspective(1200px) rotateX(-15deg) translateY(60px) scale(0.95);
@@ -257,11 +255,11 @@
 
   /* ---------- capacity stats ---------- */
   .stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:28px; text-align:left;}
-  .stat{padding:0 20px 0 0; border-left:2px solid var(--gold); padding-left:20px;}
-  .stat .num{font-family:'IBM Plex Mono',monospace; font-size:clamp(36px,4vw,48px); font-weight:600; color:var(--cotton); display:block; line-height:1;}
-  .stat .lbl{font-size:14px; color:#c9d3da; margin-top:10px; line-height:1.4;}
+  .stat{border-left:2px solid var(--gold); padding-left:20px;}
+  .stat .num{font-family:'IBM Plex Mono',monospace; font-size:clamp(32px,4vw,48px); font-weight:600; color:var(--cotton); display:block; line-height:1;}
+  .stat .lbl{font-size:14px; color:#c9d3da; margin-top:10px; line-height:1.4; display:block;}
 
-  /* ---------- quality policy — hang tag ---------- */
+  /* ---------- quality policy hang tag ---------- */
   .tagwrap{display:flex; justify-content:center; padding:20px 0 10px; perspective: 1000px;}
   .hangtag{
     background:var(--white); border:1px solid var(--indigo); border-radius:6px;
@@ -283,14 +281,11 @@
   .hangtag .eyebrow{display:block; margin-bottom:16px;}
   .hangtag blockquote{
     font-family:'Fraunces', serif; font-style:italic; font-weight:500;
-    font-size:clamp(22px,2.6vw,28px); line-height:1.4; color:var(--indigo-2);
+    font-size:clamp(20px,2.6vw,28px); line-height:1.4; color:var(--indigo-2);
   }
 
-  /* ---------- LOXDON product showcase ---------- */
-  .brand-strip{
-    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
-    margin-bottom:8px;
-  }
+  /* ---------- LOXDON showcase ---------- */
+  .brand-strip{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:8px;}
   .brand-strip .loxdon-mark{
     font-family:'Fraunces', serif; font-weight:900; font-size:24px; letter-spacing:0.02em;
     color:var(--indigo-2);
@@ -298,17 +293,17 @@
   .brand-strip .loxdon-mark em{color:var(--thread); font-style:normal;}
   .product-grid{
     display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:44px;
-    perspective: 1200px; 
+    perspective: 1200px;
   }
   .product-card{
     background:var(--white); border:1px solid var(--line); overflow:hidden; border-radius: 6px;
-    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; 
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
     will-change: transform;
     transform-style: preserve-3d;
   }
   .product-card .shot{
     position:relative; aspect-ratio:3/4; overflow:hidden; background:#EFE9DB;
-    transform: translateZ(20px); 
+    transform: translateZ(20px);
   }
   .product-card .shot img{
     width:100%; height:100%; object-fit:cover; display:block;
@@ -316,11 +311,11 @@
   }
   .product-card:hover .shot img{transform:scale(1.08);}
   .product-card .shot .badge{
-    position:absolute; top:12px; left:12px;
+    position:absolute; top:12px; left:12px; z-index:2;
     font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.06em;
     text-transform:uppercase; background:rgba(27,48,68,0.9); color:var(--cotton);
     padding:6px 10px; border-radius:4px;
-    transform: translateZ(30px); 
+    transform: translateZ(30px);
   }
   .product-card .info{padding:20px; transform: translateZ(10px);}
   .product-card .info .cat{
@@ -338,8 +333,8 @@
     box-shadow: 0 20px 40px rgba(27,48,68,0.3);
   }
   .brand-callout p{font-size:15px; line-height:1.6; color:#c9d3da; max-width:56ch;}
-  .brand-callout .loxdon-mark{color:var(--cotton); font-size:28px;}
-  .brand-callout .loxdon-mark em{color:var(--gold);}
+  .brand-callout .loxdon-mark{color:var(--cotton); font-size:28px; font-family:'Fraunces', serif; font-weight:900;}
+  .brand-callout .loxdon-mark em{color:var(--gold); font-style:normal;}
 
   /* ---------- product range ---------- */
   .range-groups{display:grid; grid-template-columns:repeat(2,1fr); gap:40px;}
@@ -370,7 +365,7 @@
   /* ---------- contact / footer ---------- */
   footer{background:var(--indigo-2); color:var(--cotton); padding:80px 0 40px;}
   .foot-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:48px;}
-  footer h2{color:var(--cotton); font-size:clamp(28px,3.4vw,38px);}
+  footer h2{color:var(--cotton); font-size:clamp(26px,3.4vw,38px);}
   footer p{color:#c9d3da; font-size:16px; line-height:1.7; margin-top:14px; max-width:44ch;}
   .contact-card{background:rgba(255,255,255,0.03); border:1px solid rgba(241,236,222,0.15); padding:36px; border-radius: 8px; backdrop-filter: blur(4px);}
   .contact-card .eyebrow{color:var(--gold);}
@@ -381,14 +376,71 @@
     display:flex; justify-content:space-between; font-size:13px; color:#8fa0aa; flex-wrap:wrap; gap:8px;
   }
 
+  /* ================= MOBILE ================= */
   @media (max-width: 860px){
-    .navlinks{display:none;}
-    .about-grid, .feature-grid, .stat-grid, .range-groups, .trust, .foot-grid{grid-template-columns:1fr;}
-    .product-grid{grid-template-columns:repeat(2,1fr);}
-    .brand-callout{padding:28px 24px;}
-    .feature-grid{border:none; background:none; gap:20px;}
-    .feature{border:1px solid var(--line); border-radius: 6px;}
-    .stat{border-left:none; border-top:2px solid var(--gold); padding-left:0; padding-top:16px;}
+    .wrap{padding:0 20px;}
+    section{padding:56px 0;}
+    .section-head{margin-bottom:32px;}
+
+    .about-grid, .feature-grid, .range-groups, .trust, .foot-grid{grid-template-columns:1fr;}
+    .about-grid{gap:32px;}
+    .range-groups{gap:28px;}
+    .trust{gap:16px;}
+    .foot-grid{gap:32px;}
+
+    nav{flex-wrap:wrap; padding:12px 20px; gap:8px;}
+    .brand{font-size:20px;}
+    .navlinks{
+      display:flex; width:100%; gap:20px; font-size:13px;
+      overflow-x:auto; white-space:nowrap;
+      scrollbar-width:none; -webkit-overflow-scrolling:touch;
+      padding-bottom:2px;
+    }
+    .navlinks::-webkit-scrollbar{display:none;}
+    .navlinks a{flex:0 0 auto;}
+
+    .hero{padding:56px 0 48px;}
+    .hero h1{max-width:none;}
+    .hero p.lede{font-size:16px;}
+    .cta-row{margin-top:28px;}
+    .btn{padding:13px 22px;}
+
+    .product-grid{grid-template-columns:repeat(2,1fr); gap:14px; margin-top:32px;}
+    .product-card .info{padding:12px;}
+    .product-card .info h4{font-size:15px;}
+    .product-card .info p{font-size:12.5px;}
+    .product-card .shot .badge{font-size:9.5px; padding:4px 8px; top:8px; left:8px;}
+
+    .brand-callout{padding:28px 22px; margin-top:36px;}
+    .brand-callout .btn{width:100%; justify-content:center;}
+
+    .feature-grid{border:none; background:none; gap:14px;}
+    .feature{border:1px solid var(--line); border-radius:6px; padding:28px 22px;}
+
+    .stat-grid{grid-template-columns:repeat(2,1fr); gap:24px 16px;}
+    .stat{border-left:none; border-top:2px solid var(--gold); padding:14px 0 0;}
+
+    .hangtag{padding:44px 24px; transform:none;}
+    .hangtag::after{inset:10px;}
+
+    .trust-item{padding:26px;}
+    .trust-item .big{font-size:28px;}
+
+    footer{padding:56px 0 32px;}
+    .contact-card{padding:24px;}
+    .contact-line{flex-direction:column; gap:4px; margin-top:16px; word-break:break-word;}
+    .contact-line .k{width:auto;}
+    .foot-bottom{margin-top:40px; flex-direction:column;}
+
+    .reveal-3d{transform:translateY(30px); transition:transform .7s ease-out, opacity .7s ease-out;}
+    .reveal-3d.active{transform:none;}
+  }
+
+  @media (max-width: 400px){
+    .intro-content h1{font-size:40px;}
+    .intro-content p{font-size:14px;}
+    .stat-grid{grid-template-columns:1fr;}
+    .tag{font-size:11px;}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -402,10 +454,9 @@
 </head>
 <body>
 
-<!-- New 3D Scrolling Image -->
+<!-- 3D Scrolling Intro Image -->
 <div class="intro-scroll-space"></div>
 <div id="intro-splash">
-  <!-- Replace this URL with your own factory image -->
   <img src="./background image.png" alt="Textile manufacturing background">
   <div class="intro-content">
     <h1>KR Creaation</h1>
@@ -418,7 +469,6 @@
   </div>
 </div>
 
-<!-- Main Website Content slides over the top -->
 <div class="main-site-content">
 
   <header>
@@ -454,16 +504,14 @@
     </div>
   </section>
 
-  <div class="wrap"><div class="seam reveal-3d" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span
-  ></div></div>
+  <div class="wrap"><div class="seam" aria-hidden="true"></div></div>
 
   <section id="about">
     <div class="wrap">
       <div class="about-grid">
         <div class="reveal-3d">
           <span class="eyebrow">About us</span>
-          <h2 style="margin-top:10px; font-size:clamp(26px,3.2vw,34px);">Built on one family's name, run for our clients' benefit.</h2>
+          <h2 style="margin-top:10px; font-size:clamp(24px,3.2vw,34px);">Built on one family's name, run for our clients' benefit.</h2>
           <p>KR Creaation is a family-owned firm managed by Mr. Sabapathi. Our factory sits in Tirupur — 50 kilometres from Coimbatore airport, and one of India's most important textile cities. Founded in 1999, we specialise in trendy, fashionable knitted outerwear.</p>
           <p>Our long-standing clients include established apparel brands and government garment programmes. Every one of our existing clients has worked with us for more than ten years — proof of the co-operation we sustain with the people who trust us with their production.</p>
           <p>We currently produce around five crore rupees' worth of garments a year, and we're now actively seeking to grow further into government orders.</p>
@@ -483,9 +531,7 @@
     </div>
   </section>
 
-  <div class="wrap"><div class="seam reveal-3d" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span
-  ></div></div>
+  <div class="wrap"><div class="seam" aria-hidden="true"></div></div>
 
   <section id="loxdon">
     <div class="wrap">
@@ -493,7 +539,6 @@
         <span class="eyebrow">Our in-house label</span>
         <div class="brand-strip">
           <span class="loxdon-mark">LOX<em>DON</em></span>
-      
         </div>
         <h2>Everything you see here is designed, cut and stitched under our own roof.</h2>
         <p>LOXDON is KR Creaation's own menswear line — clean silhouettes, honest fabrics and factory-direct pricing, with no middleman between the machine and the label. Since we cut, sew and finish every piece ourselves, we control the fit, the fabric hand-feel and the turnaround on every single run.</p>
@@ -501,35 +546,35 @@
 
       <div class="product-grid">
         <div class="product-card reveal-3d delay-1">
-          <div class="shot"><span class="badge">Tee</span><img src="./loxdon 3.png" alt="LOXDON black t-shirt with an asymmetric white seam line"></div>
+          <div class="shot"><span class="badge">Tee</span><img src="./loxdon 3.png" alt="LOXDON black t-shirt with an asymmetric white seam line" loading="lazy"></div>
           <div class="info"><span class="cat">T-Shirts</span><h4>Fractured Line Tee</h4><p>Jet black, panelled construction with a raw contrast seam.</p></div>
         </div>
         <div class="product-card reveal-3d delay-2">
-          <div class="shot"><span class="badge">Tee</span><img src="./loxdon style 2.png" alt="LOXDON ivory t-shirt with vertical stripe detailing"></div>
+          <div class="shot"><span class="badge">Tee</span><img src="./loxdon style 2.png" alt="LOXDON ivory t-shirt with vertical stripe detailing" loading="lazy"></div>
           <div class="info"><span class="cat">T-Shirts</span><h4>Signature Stripe Tee</h4><p>Ivory ringer neck with the LOXDON vertical stripe motif.</p></div>
         </div>
         <div class="product-card reveal-3d delay-3">
-          <div class="shot"><span class="badge">Henley</span><img src="./loxdon style 1.png" alt="LOXDON forest green waffle-knit henley with chest pocket"></div>
+          <div class="shot"><span class="badge">Henley</span><img src="./loxdon style 1.png" alt="LOXDON forest green waffle-knit henley with chest pocket" loading="lazy"></div>
           <div class="info"><span class="cat">Henleys</span><h4>Waffle Henley</h4><p>Forest green waffle knit, button placket, patch pocket.</p></div>
         </div>
         <div class="product-card reveal-3d delay-4">
-          <div class="shot"><span class="badge">Tee</span><img src="./loxdon style 4.png" alt="LOXDON colourblock t-shirt in sand and navy"></div>
+          <div class="shot"><span class="badge">Tee</span><img src="./loxdon style 4.png" alt="LOXDON colourblock t-shirt in sand and navy" loading="lazy"></div>
           <div class="info"><span class="cat">T-Shirts</span><h4>Colourblock Pocket Tee</h4><p>Sand and navy split body with a contrast utility pocket.</p></div>
         </div>
         <div class="product-card reveal-3d delay-1">
-          <div class="shot"><span class="badge">Trouser</span><img src="./loxdon pant 2.png" alt="LOXDON black cargo trouser with side pocket"></div>
-          <div class="info"><span class="cat">Trousers</span><h4>slim utility trouser</h4><p>Black fleece trouser, drawcord waist, tapered workwear fit.</p></div>
+          <div class="shot"><span class="badge">Trouser</span><img src="./loxdon pant 2.png" alt="LOXDON black cargo trouser with side pocket" loading="lazy"></div>
+          <div class="info"><span class="cat">Trousers</span><h4>Slim Utility Trouser</h4><p>Black fleece trouser, drawcord waist, tapered workwear fit.</p></div>
         </div>
         <div class="product-card reveal-3d delay-2">
-          <div class="shot"><span class="badge">Jogger</span><img src="./loxdon pant 1.png" alt="LOXDON sand cargo jogger with double pockets"></div>
+          <div class="shot"><span class="badge">Jogger</span><img src="./loxdon pant 1.png" alt="LOXDON sand cargo jogger with double pockets" loading="lazy"></div>
           <div class="info"><span class="cat">Joggers</span><h4>Twin-Pocket Cargo Jogger</h4><p>Sand cotton cargo with dual flap pockets and taper leg.</p></div>
         </div>
         <div class="product-card reveal-3d delay-3">
-          <div class="shot"><span class="badge">Jogger</span><img src="./loxdon pant green.png" alt="LOXDON olive utility jogger with zip pocket"></div>
+          <div class="shot"><span class="badge">Jogger</span><img src="./loxdon pant green.png" alt="LOXDON olive utility jogger with zip pocket" loading="lazy"></div>
           <div class="info"><span class="cat">Joggers</span><h4>Slim Utility Jogger</h4><p>Olive twill, zip cargo pocket, tapered workwear fit.</p></div>
         </div>
         <div class="product-card reveal-3d delay-4">
-          <div class="shot"><span class="badge">Jogger</span><img src="./loxdon pant 4.png" alt="LOXDON stone grey jogger with panel seaming"></div>
+          <div class="shot"><span class="badge">Jogger</span><img src="./loxdon pant 4.png" alt="LOXDON stone grey jogger with panel seaming" loading="lazy"></div>
           <div class="info"><span class="cat">Joggers</span><h4>Panel Jogger</h4><p>Stone grey fleece with sport-panel seaming at the knee.</p></div>
         </div>
       </div>
@@ -680,81 +725,54 @@
     </div>
   </footer>
 
-</div> <!-- End Main Site Content -->
+</div>
 
-<!-- JavaScript for 3D Interactions -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    
-    // 1. 3D Intro Disappear Effect
+
+    // 1. 3D intro disappear effect
     const introSplash = document.getElementById('intro-splash');
-    
     window.addEventListener('scroll', () => {
-      let scrollY = window.scrollY;
-      let windowHeight = window.innerHeight;
-      
-      // Only animate while we are scrolling past the first 100vh
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
       if (scrollY <= windowHeight) {
-        let progress = scrollY / windowHeight; 
-        
-        // Push backwards in Z space, fade out slightly, and tilt up
-        let scale = Math.max(0.7, 1 - (progress * 0.3));
-        let rotateX = progress * 20; // Tilt backwards up to 20 degrees
-        let opacity = Math.max(0, 1 - (progress * 1.5));
-        let translateY = scrollY * 0.4; // Parallax delay
-        
+        const progress = scrollY / windowHeight;
+        const scale = Math.max(0.7, 1 - (progress * 0.3));
+        const rotateX = progress * 20;
+        const opacity = Math.max(0, 1 - (progress * 1.5));
+        const translateY = scrollY * 0.4;
         introSplash.style.transform = `perspective(1000px) translateY(${translateY}px) rotateX(${rotateX}deg) scale(${scale})`;
         introSplash.style.opacity = opacity;
       }
-    });
+    }, { passive: true });
 
-    // 2. Scroll Reveal Observer (Triggers when elements enter the viewport)
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.15
-    };
-
-    const scrollObserver = new IntersectionObserver((entries, observer) => {
+    // 2. Scroll reveal observer
+    const scrollObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('active');
       });
-    }, observerOptions);
+    }, { root: null, rootMargin: '0px', threshold: 0.1 });
+    document.querySelectorAll('.reveal-3d').forEach(el => scrollObserver.observe(el));
 
-    const revealElements = document.querySelectorAll('.reveal-3d');
-    revealElements.forEach(el => scrollObserver.observe(el));
-
-
-    // 3. 3D Interactive Hover effect for Product Cards
+    // 3. 3D hover tilt for product cards (desktop only)
     const cards = document.querySelectorAll('.product-card');
-    
     if (window.matchMedia("(hover: hover)").matches) {
       cards.forEach(card => {
-        
         card.addEventListener('mousemove', (e) => {
           const rect = card.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
-          
           const centerX = rect.width / 2;
           const centerY = rect.height / 2;
-          
           const rotateX = ((y - centerY) / centerY) * -12;
           const rotateY = ((x - centerX) / centerX) * 12;
-          
           card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-          card.style.boxShadow = `
-            ${-rotateY}px ${rotateX + 15}px 35px rgba(37, 65, 92, 0.15)
-          `;
+          card.style.boxShadow = `${-rotateY}px ${rotateX + 15}px 35px rgba(37, 65, 92, 0.15)`;
         });
-        
         card.addEventListener('mouseleave', () => {
           card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
           card.style.boxShadow = 'none';
         });
-        
       });
     }
   });
