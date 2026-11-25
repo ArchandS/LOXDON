@@ -376,6 +376,13 @@
     display:flex; justify-content:space-between; font-size:13px; color:#8fa0aa; flex-wrap:wrap; gap:8px;
   }
 
+  /* ---------- 3D hero scene ---------- */
+  .hero-3d{position:absolute; top:0; right:0; width:55%; height:100%; z-index:1; pointer-events:none;}
+  .founder-card, .trust-item{transform-style:preserve-3d;}
+  @media (max-width: 860px){
+    .hero-3d{width:100%; opacity:0.35;}
+  }
+
   /* ================= MOBILE ================= */
   @media (max-width: 860px){
     .wrap{padding:0 20px;}
@@ -487,6 +494,7 @@
 
   <section class="hero reveal-3d">
     <div class="knit-bg" aria-hidden="true"></div>
+    <canvas id="hero-3d" class="hero-3d" aria-hidden="true"></canvas>
     <div class="wrap">
       <span class="eyebrow">Tirupur, Tamil Nadu &nbsp;·&nbsp; Est. 1999</span>
       <h1>Knitted garments, <i>held together</i> by twenty‑five years of trust.</h1>
@@ -727,6 +735,7 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
 
@@ -755,9 +764,10 @@
     document.querySelectorAll('.reveal-3d').forEach(el => scrollObserver.observe(el));
 
     // 3. 3D hover tilt for product cards (desktop only)
-    const cards = document.querySelectorAll('.product-card');
+    const cards = document.querySelectorAll('.product-card, .founder-card, .trust-item');
     if (window.matchMedia("(hover: hover)").matches) {
       cards.forEach(card => {
+        card.style.transition = 'transform .15s ease-out, box-shadow .15s ease-out, opacity .9s ease-out';
         card.addEventListener('mousemove', (e) => {
           const rect = card.getBoundingClientRect();
           const x = e.clientX - rect.left;
@@ -776,6 +786,83 @@
       });
     }
   });
+
+  // 4. Three.js hero scene: floating yarn knots
+  (function(){
+    const canvas = document.getElementById('hero-3d');
+    if (!canvas || typeof THREE === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true}); } catch(e) { return; }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+    camera.position.z = 9;
+    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    const light = new THREE.DirectionalLight(0xffffff, 0.9);
+    light.position.set(4, 5, 6);
+    scene.add(light);
+
+    const group = new THREE.Group();
+    scene.add(group);
+    const knots = [
+      {r:1.6, t:0.42, p:2, q:3, c:0xB8432E, s:0.006},
+      {r:1.1, t:0.28, p:3, q:5, c:0x25415C, s:-0.009},
+      {r:0.6, t:0.15, p:2, q:7, c:0xC69A44, s:0.013}
+    ].map(k => {
+      const m = new THREE.Mesh(
+        new THREE.TorusKnotGeometry(k.r, k.t, 160, 20, k.p, k.q),
+        new THREE.MeshStandardMaterial({color:k.c, roughness:0.55, metalness:0.15})
+      );
+      m.userData.s = k.s;
+      group.add(m);
+      return m;
+    });
+    // small orbiting "buttons"
+    const buttons = [];
+    for (let i = 0; i < 6; i++) {
+      const b = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.18, 0.18, 0.05, 24),
+        new THREE.MeshStandardMaterial({color:0xF1ECDE, roughness:0.4})
+      );
+      b.userData.a = (i / 6) * Math.PI * 2;
+      group.add(b);
+      buttons.push(b);
+    }
+
+    let mx = 0, my = 0, visible = true;
+    window.addEventListener('pointermove', e => {
+      mx = (e.clientX / window.innerWidth - 0.5) * 2;
+      my = (e.clientY / window.innerHeight - 0.5) * 2;
+    }, {passive:true});
+    new IntersectionObserver(en => { visible = en[0].isIntersecting; }).observe(canvas);
+
+    function resize(){
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let t = 0;
+    (function loop(){
+      requestAnimationFrame(loop);
+      if (!visible) return;
+      t += 0.01;
+      knots.forEach(k => { k.rotation.x += k.userData.s; k.rotation.y += k.userData.s * 1.4; });
+      buttons.forEach(b => {
+        const a = b.userData.a + t * 0.6;
+        b.position.set(Math.cos(a) * 2.9, Math.sin(a * 1.3) * 1.2, Math.sin(a) * 2.9);
+        b.rotation.x = a; b.rotation.z = a * 0.7;
+      });
+      group.rotation.y += (mx * 0.6 - group.rotation.y) * 0.04;
+      group.rotation.x += (my * 0.4 - group.rotation.x) * 0.04;
+      group.position.y = Math.sin(t) * 0.15 - window.scrollY * 0.002;
+      renderer.render(scene, camera);
+    })();
+  })();
 </script>
 
 </body>
